@@ -1,16 +1,16 @@
-name: Test
-
-on:
-  push:
-    branches:
-      - main
-
+name: workerTests
+run-name: ${{ github.actor }} is testing worker
+on: [push]
 jobs:
-  test:
+  run-worker-tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./ts-worker
     steps:
-    - uses: actions/checkout@v2
-    - name: Install dependencies
-      run: npm install --prefix ./ts-worker/
-    - name: Run tests
-      run: npm test --prefix ./ts-worker/
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - run: npm ci
+      - run: npm run test
