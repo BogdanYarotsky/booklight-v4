@@ -13,7 +13,7 @@ import {
 } from "@grpc/grpc-js";
 import * as _m0 from "protobufjs/minimal";
 
-export const protobufPackage = "";
+export const protobufPackage = "booklight";
 
 export interface BooksRequest {
   query: string;
@@ -292,7 +292,7 @@ export const Book = {
 export type BooksService = typeof BooksService;
 export const BooksService = {
   get: {
-    path: "/Books/Get",
+    path: "/booklight.Books/Get",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: BooksRequest) => Buffer.from(BooksRequest.encode(value).finish()),
@@ -321,7 +321,7 @@ export interface BooksClient extends Client {
   ): ClientUnaryCall;
 }
 
-export const BooksClient = makeGenericClientConstructor(BooksService, "Books") as unknown as {
+export const BooksClient = makeGenericClientConstructor(BooksService, "booklight.Books") as unknown as {
   new (address: string, credentials: ChannelCredentials, options?: Partial<ClientOptions>): BooksClient;
   service: typeof BooksService;
 };
