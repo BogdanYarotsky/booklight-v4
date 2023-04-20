@@ -1,4 +1,6 @@
 syntax = "proto3";
+package booklight;
+option go_package = "github.com/BogdanYarotsky/booklight-v4";
 
 message BooksRequest {
   string query = 1;
