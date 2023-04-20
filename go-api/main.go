@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 
+	pb "github.com/BogdanYarotsky/booklight-v4/go-api/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -22,7 +23,7 @@ func main() {
 		log.Fatal(err)
 	}
 	defer conn.Close()
-
+	booksClient := pb.NewBooksClient(conn)
 	http.HandleFunc("/api/search", func(w http.ResponseWriter, r *http.Request) {
 				query := r.URL.Query().Get("q")
 
@@ -31,12 +32,13 @@ func main() {
 			return
 		}
 
-		// results := searchService.Search(query)
+		resp, err := booksClient.Get(r.Context(), &pb.BooksRequest{Query: query})
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 
-		response := Response{Query: query}
-		// add search results to the response
-		// ...
-		jsonBytes, err := json.Marshal(response)
+		jsonBytes, err := json.Marshal(resp)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return

@@ -1,4 +1,4 @@
-module github.com/BogdanYarotsky/booklight-v4
+module github.com/BogdanYarotsky/booklight-v4/go-api
 
 go 1.20
 
